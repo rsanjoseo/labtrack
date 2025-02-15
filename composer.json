@@ -1,0 +1,38 @@
+{
+  "name": "alxarafe/labtrack",
+  "type": "project",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Rafael San José Tovar",
+      "email": "rsanjose@alxarafe.com",
+      "homepage": "https://alxarafe.com",
+      "role": "Developer"
+    }
+  ],
+  "config": {
+    "vendor-dir": "vendor",
+    "process-timeout": 0,
+    "platform": {
+      "php": "8.3"
+    }
+  },
+  "require": {
+    "php": ">=8.3",
+    "rsanjoseo/alxarafe": "^0.0.40",
+    "ext-pdo": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Modules\\": "Modules/"
+    }
+  },
+  "scripts": {
+    "post-package-install": [
+      "Rsanjoseo\\Alxarafe\\ComposerScripts::postUpdate"
+    ],
+    "post-package-update": [
+      "Rsanjoseo\\Alxarafe\\ComposerScripts::postUpdate"
+    ]
+  }
+}
