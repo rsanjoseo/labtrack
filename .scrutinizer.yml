@@ -2,10 +2,14 @@ build:
   image: default-bionic
   environment:
     variables:
-      PHP_VERSION: 8.2
+      PHP_VERSION: 8.3
       SKIP_COPY_ASSETS: true
   dependencies:
     before:
+      # Actualizar la lista de paquetes e instalar PHP 8.3
+      - sudo add-apt-repository ppa:ondrej/php -y
+      - sudo apt-get update
+      - sudo apt-get install -y php8.3 php8.3-cli php8.3-fpm php8.3-mbstring php8.3-xml php8.3-mysql
       - composer install
   tests:
     override:
