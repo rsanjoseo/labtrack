@@ -24,7 +24,7 @@ const BASE_PATH = __DIR__;
 
 $autoload_filename = realpath(BASE_PATH . '/../vendor/autoload.php');
 if (!file_exists($autoload_filename)) {
-    die('<h1>COMPOSER ERROR</h1><p>You need to run: "composer install"</p>');
+    die('<h1>COMPOSER ERROR</h1><p>You need to run: "<strong>composer install</strong>".</p>');
 }
 
 require_once $autoload_filename;
