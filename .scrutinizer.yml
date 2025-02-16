@@ -19,7 +19,8 @@ build:
       # - command: vendor/bin/phpunit --coverage-clover=reports/coverage.xml
 filter:
   paths:
-    - src/*
+    - Modules/*
+    - public/*
 
 tools:
   php_analyzer: true
