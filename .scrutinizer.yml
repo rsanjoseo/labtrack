@@ -7,6 +7,13 @@ tools:
     config:
       standard: "PSR12"
   php_mess_detector: true
+  php_analyzer: true
+  external_code_coverage:
+    enabled: false
+    timeout: 600
+    filter:
+      excluded_paths:
+        - "vendor/*"
 
 build:
   image: default-jammy
@@ -16,15 +23,15 @@ build:
       SKIP_COPY_ASSETS: true
   dependencies:
     before:
-      # Instalar las dependencias necesarias
+      # Install necessary dependencies
       - sudo apt-get update
       - sudo apt-get install -y software-properties-common wget
-      # Descargar y agregar la clave del repositorio de PHP
+      # Download and add the PHP repository key
       - wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
-      # Agregar el repositorio de PHP
+      # Add the PHP repository
       - sudo sh -c 'echo "deb https://packages.sury.org/php/ jammy main" > /etc/apt/sources.list.d/php.list'
       - sudo apt-get update
-      # Instalar PHP 8.3 y los módulos necesarios
+      # Install PHP 8.3 and necessary modules
       - sudo apt-get install -y php8.3 php8.3-cli php8.3-fpm php8.3-mbstring php8.3-xml php8.3-mysql
       - composer install
   nodes:
@@ -44,15 +51,6 @@ filter:
     - "public/*"
   excluded_paths:
     - "vendor/*"
-
-tools:
-  php_analyzer: true
-  external_code_coverage:
-    enabled: false
-    timeout: 600
-    filter:
-      excluded_paths:
-        - "vendor/*"
 
 coding_style:
   php:
