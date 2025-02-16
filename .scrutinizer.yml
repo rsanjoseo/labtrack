@@ -16,7 +16,7 @@ tools:
         - "vendor/*"
 
 build:
-  image: default-jammy
+  image: default
   environment:
     php: 8.2 # Ensure the environment uses PHP 8.2
     variables:
@@ -62,4 +62,4 @@ coding_style:
         indent_case: true
     spaces:
       around_operators:
-        concatenation: true
+        concaten
