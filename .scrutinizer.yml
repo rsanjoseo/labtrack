@@ -1,4 +1,4 @@
-# Basic configuration for PHP 8.3
+# Valid Scrutinizer config for PHP 8.3
 checks:
   php: true
 
@@ -14,14 +14,15 @@ build:
   nodes:
     analysis:
       tests:
-        # Remove invalid 'override' and use direct command
-        - php-scrutinizer-run
+        # Proper command structure using override
+        override:
+          - php-scrutinizer-run
     tests:
-      # Remove 'override' and use standard command structure
-      commands:
-        - php-scrutinizer-run
+      tests:
+        # Correct syntax for test commands
+        override:
+          - php-scrutinizer-run
 
-# Path configuration
 filter:
   paths:
     - "public/*"
