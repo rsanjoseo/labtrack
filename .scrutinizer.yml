@@ -16,7 +16,7 @@ tools:
         - "vendor/*"
 
 build:
-  image: default
+  image: default-bionic
   environment:
     php: 8.2 # Ensure the environment uses PHP 8.2
     variables:
@@ -29,7 +29,7 @@ build:
       # Download and add the PHP repository key
       - wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
       # Add the PHP repository
-      - sudo sh -c 'echo "deb https://packages.sury.org/php/ jammy main" > /etc/apt/sources.list.d/php.list'
+      - sudo sh -c 'echo "deb https://packages.sury.org/php/ bionic main" > /etc/apt/sources.list.d/php.list'
       - sudo apt-get update
       # Install PHP 8.2 and necessary modules
       - sudo apt-get install -y php8.2 php8.2-cli php8.2-fpm php8.2-mbstring php8.2-xml php8.2-mysql
