@@ -1,56 +1,35 @@
 # Scrutinizer config for PHP 8.2
-checks:
-  php: true
+build:
+  nodes:
+    analysis:
+      image: 'php:8.3' # Using Docker Image with PHP 8.3
+      environment:
+        variables:
+          PHP_VERSION: '8.3'
+          SKIP_COPY_ASSETS: true
+  dependencies:
+    before:
+      - composer install # Installing dependencies before testing
+  tests:
+    override:
+      - php-scrutinizer-run --enable-security-analysis
+      # Run PHP-CS Beautifier and Fixer
+      - command: vendor/bin/phpcbf --tab-width=4 --encoding=utf-8 --standard=phpcs.xml src/Core -s
+      # Run PHP-CS
+      - command: vendor/bin/phpcs --tab-width=4 --encoding=utf-8 --standard=phpcs.xml src/Core -s
+filter:
+  paths:
+    - public/* # Routes included in the analysis
+    - Modules/*
 
 tools:
-  php_code_sniffer:
-    config:
-      standard: "PSR12"
-  php_mess_detector: true
   php_analyzer: true
   external_code_coverage:
     enabled: false
     timeout: 600
     filter:
       excluded_paths:
-        - "vendor/*"
-
-build:
-  image: default-bionic
-  environment:
-    php: 8.2 # Ensure the environment uses PHP 8.2
-    variables:
-      SKIP_COPY_ASSETS: true
-  dependencies:
-    before:
-      # Install necessary dependencies
-      - sudo apt-get update
-      - sudo apt-get install -y software-properties-common wget
-      # Download and add the PHP repository key
-      - wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
-      # Add the PHP repository
-      - sudo sh -c 'echo "deb https://packages.sury.org/php/ bionic main" > /etc/apt/sources.list.d/php.list'
-      - sudo apt-get update
-      # Install PHP 8.2 and necessary modules
-      - sudo apt-get install -y php8.2 php8.2-cli php8.2-fpm php8.2-mbstring php8.2-xml php8.2-mysql
-      - composer install
-  nodes:
-    analysis:
-      tests:
-        # Proper command structure using override
-        override:
-          - php-scrutinizer-run
-    tests:
-      tests:
-        # Correct syntax for test commands
-        override:
-          - php-scrutinizer-run
-
-filter:
-  paths:
-    - "public/*"
-  excluded_paths:
-    - "vendor/*"
+        - 'vendor/*' # Exclude vendor folder from coverage scan
 
 coding_style:
   php:
