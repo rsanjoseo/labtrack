@@ -14,11 +14,11 @@
     "vendor-dir": "vendor",
     "process-timeout": 0,
     "platform": {
-      "php": "8.3"
+      "php": "8.2"
     }
   },
   "require": {
-    "php": ">=8.3",
+    "php": ">=8.2",
     "rsanjoseo/alxarafe": "^0.0.40",
     "ext-pdo": "*"
   },
