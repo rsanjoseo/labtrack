@@ -1,25 +1,34 @@
 build:
-  nodes:
-    analysis:
-      image: 'php:8.3' # Using Docker Image with PHP 8.3
-      environment:
-        variables:
-          PHP_VERSION: '8.3'
-          SKIP_COPY_ASSETS: true
+  image: default-bionic
+  environment:
+    variables:
+      PHP_VERSION: 8.3
+      SKIP_COPY_ASSETS: true
   dependencies:
     before:
-      - composer install # Installing dependencies before testing
+      # Instalar las dependencias necesarias
+      - sudo apt-get update
+      - sudo apt-get install -y software-properties-common wget
+      # Descargar y agregar la clave del repositorio de PHP
+      - wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
+      # Agregar el repositorio de PHP
+      - sudo sh -c 'echo "deb https://packages.sury.org/php/ bionic main" > /etc/apt/sources.list.d/php.list'
+      - sudo apt-get update
+      # Instalar PHP 8.3 y los módulos necesarios
+      - sudo apt-get install -y php8.3 php8.3-cli php8.3-fpm php8.3-mbstring php8.3-xml php8.3-mysql
+      - composer install
   tests:
     override:
       - php-scrutinizer-run --enable-security-analysis
-      # Run PHP-CS Beautifier and Fixer
+      # Run PHP-CS Beautifier and Fixer: to format some common non PSR code that can be auto-fixed.
       - command: vendor/bin/phpcbf --tab-width=4 --encoding=utf-8 --standard=phpcs.xml src/Core -s
-      # Run PHP-CS
+      # Run PHP-CS.
       - command: vendor/bin/phpcs --tab-width=4 --encoding=utf-8 --standard=phpcs.xml src/Core -s
+      # Run PHPUnit test.
+      # - command: vendor/bin/phpunit --coverage-clover=reports/coverage.xml
 filter:
   paths:
-    - public/* # Routes included in the analysis
-    - Modules/*
+    - public/*
 
 tools:
   php_analyzer: true
@@ -28,7 +37,7 @@ tools:
     timeout: 600
     filter:
       excluded_paths:
-        - 'vendor/*' # Exclude vendor folder from coverage scan
+        - 'vendor/*'
 
 coding_style:
   php:
