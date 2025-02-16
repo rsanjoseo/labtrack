@@ -1,52 +1,28 @@
-build:
-  image: default-jammy
-  environment:
-    variables:
-      PHP_VERSION: 8.3
-      SKIP_COPY_ASSETS: true
-  dependencies:
-    before:
-      # Instalar las dependencias necesarias
-      - sudo apt-get update
-      - sudo apt-get install -y software-properties-common wget
-      # Descargar y agregar la clave del repositorio de PHP
-      - wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
-      # Agregar el repositorio de PHP
-      - sudo sh -c 'echo "deb https://packages.sury.org/php/ jammy main" > /etc/apt/sources.list.d/php.list'
-      - sudo apt-get update
-      # Instalar PHP 8.3 y los módulos necesarios
-      - sudo apt-get install -y php8.3 php8.3-cli php8.3-fpm php8.3-mbstring php8.3-xml php8.3-mysql
-      - composer install
-  tests:
-    override:
-      - php-scrutinizer-run --enable-security-analysis
-      # Run PHP-CS Beautifier and Fixer: to format some common non PSR code that can be auto-fixed.
-      - command: vendor/bin/phpcbf --tab-width=4 --encoding=utf-8 --standard=phpcs.xml src/Core -s
-      # Run PHP-CS.
-      - command: vendor/bin/phpcs --tab-width=4 --encoding=utf-8 --standard=phpcs.xml src/Core -s
-      # Run PHPUnit test.
-      # - command: vendor/bin/phpunit --coverage-clover=reports/coverage.xml
-filter:
-  paths:
-    - public/*
+checks:
+  php: true
 
 tools:
-  php_analyzer: true
+  php_code_sniffer:
+    config:
+      standard: "PSR12"
   external_code_coverage:
-    enabled: false
-    timeout: 600
-    filter:
-      excluded_paths:
-        - 'vendor/*'
+    timeout: 1800
+  php_mess_detector: true
 
-coding_style:
-  php:
-    indentation:
-      general:
-        use_tabs: false
-        size: 4
-      switch:
-        indent_case: true
-    spaces:
-      around_operators:
-        concatenation:
+build:
+  environment:
+    php: 8.3
+  nodes:
+    analysis:
+      tests:
+        override:
+          - php-scrutinizer-run
+    tests:
+      override:
+        - php-scrutinizer-run
+
+filter:
+  paths:
+    - "public/*"
+  excluded_paths:
+    - "vendor/*"
