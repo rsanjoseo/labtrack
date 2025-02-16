@@ -11,7 +11,7 @@ Monitoring is provided via a pin, so that part is semi-public and should only be
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/rsanjoseo/labtrack/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/rsanjoseo/labtrack/?branch=main)
 [![Build Status](https://scrutinizer-ci.com/g/rsanjoseo/labtrack/badges/build.png?b=main)](https://scrutinizer-ci.com/g/rsanjoseo/labtrack/build-status/main)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/rsanjoseo/labtrack/issues?utf8=✓&q=is%3Aopen%20is%3Aissue)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.3-8892BF.svg?style=flat-square)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg?style=flat-square)](https://php.net/)
 
 ## LICENSE
 
