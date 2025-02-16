@@ -18,8 +18,8 @@ tools:
 build:
   image: default-jammy
   environment:
+    php: 8.3 # Ensure the environment uses PHP 8.3
     variables:
-      PHP_VERSION: 8.3
       SKIP_COPY_ASSETS: true
   dependencies:
     before:
